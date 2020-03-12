@@ -1,15 +1,25 @@
 const express = require("express");
 const mongoose = require("mongoose");
-var mongoDB = require('mongodb');
+const mongoDB = require('mongodb');
 const contactModel = require("./../model/contactModel.js");
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 
 const router = new express.Router();
 
-router.get("/listeContacts", (req, res, next) => {
-    res.render("listeContacts");
-  });
+router.get("/listeContacts", (req, res) => {
+  contactModel
+    .find()
+    .then(dbRes => {
+      res.render("listeContacts", {
+        listeContacts: dbRes,
+      });
+    });
+});
+
+// router.get("/listeContacts", (req, res, next) => {
+//     res.render("listeContacts");
+//   });
 
 //   router.get("/listeContacts", (req, res) => {
 //       contactModel
@@ -25,9 +35,9 @@ router.get("/listeContacts", (req, res, next) => {
 //       .catch(err => console.log(err));
 //   })
 
-  router.post("/listContacts", async(req, res, next) => {
-    const newContact = new Contact(req.body);
-    newContact.save()
+  router.post("/", async(req, res, next) => {
+    const newContact = new contactModel(req.body);
+    contactModel.create(newContact)
     .then(dbRes => {
       res.status(200).send(dbRes)
     })
@@ -35,5 +45,9 @@ router.get("/listeContacts", (req, res, next) => {
       res.status(500).send(dbErr)
     });
 });
+
+
+
+
 
   module.exports = router;
