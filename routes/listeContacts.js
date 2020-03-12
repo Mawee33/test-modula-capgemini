@@ -1,13 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const mongoDB = require('mongodb');
 const contactModel = require("./../model/contactModel.js");
-const bodyParser = require('body-parser');
-
 
 const router = new express.Router();
 
-router.get("/listeContacts", (req, res) => {
+router.get("/", (req, res) => {
   contactModel
     .find()
     .then(dbRes => {
@@ -17,37 +13,16 @@ router.get("/listeContacts", (req, res) => {
     });
 });
 
-// router.get("/listeContacts", (req, res, next) => {
-//     res.render("listeContacts");
-//   });
-
-//   router.get("/listeContacts", (req, res) => {
-//       contactModel
-//       .findById(req.params.id)
-//       .populate("contact")
-//       .then(dbRes => {
-//         console.log(dbRes.proposals);
-//         res.render("proposals", {
-//           events: dbRes,
-//           css: ["event"]
-//         });
-//       })
-//       .catch(err => console.log(err));
-//   })
-
-  router.post("/", async(req, res, next) => {
-    const newContact = new contactModel(req.body);
-    contactModel.create(newContact)
-    .then(dbRes => {
-      res.status(200).send(dbRes)
+router.post('/', async (req, res, next) => {
+  const newContact = new contactModel(req.body);
+  contactModel
+    .create(newContact)
+    .then(() => {
+      res.redirect('/listeContacts');
     })
     .catch(dbErr => {
-      res.status(500).send(dbErr)
+      res.status(500).send(dbErr);
     });
 });
-
-
-
-
 
   module.exports = router;
