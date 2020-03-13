@@ -3,7 +3,7 @@ const contactModel = require("./../model/contactModel.js");
 
 const router = new express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", (_, res) => {
   contactModel
     .find()
     .then(dbRes => {
@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
   const newContact = new contactModel(req.body);
   contactModel
     .create(newContact)
@@ -25,4 +25,4 @@ router.post('/', async (req, res, next) => {
     });
 });
 
-  module.exports = router;
+module.exports = router;

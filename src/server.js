@@ -1,10 +1,10 @@
 require("dotenv").config();
 require("./config/mongo");
 
-const express      = require('express');
+const express = require('express');
 const server = express();
-const hbs          = require('hbs');
-const path         = require('path');
+const hbs = require('hbs');
+const path = require('path');
 const mongoose = require("mongoose");
 var mongoDB = require('mongodb');
 var util = require('util');
@@ -14,37 +14,34 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const flash = require("connect-flash");
 
-const port = 8080;
-
-
 server.set("views", path.join(__dirname, "views"));
-server.set("view engine", "hbs"); 
+server.set("view engine", "hbs");
 hbs.registerPartials(path.join(__dirname + "/views/partials"));
-server.use(bodyParser.urlencoded({ extended : false}));
+server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(path.join(__dirname, "public")));
 
 server.use(
-    session({
-      secret: process.env.SESSION_SECRET,
-      cookie: { maxAge: 600000 }, // in millisec
-      store: new MongoStore({
-        mongooseConnection: mongoose.connection,
-        ttl: 24 * 60 * 60 // 1 day
-      }),
-      saveUninitialized: true,
-      resave: true
-    })
-  );
-  server.use(flash());
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 600000 }, // in millisec
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 24 * 60 * 60 // 1 day
+    }),
+    saveUninitialized: true,
+    resave: true
+  })
+);
+server.use(flash());
 
-  server.use(function checkLoggedIn(req, res, next) {
-    res.locals.isLoggedIn = Boolean(req.session.currentUser);
-    res.locals.isAdmin = Boolean(
-      req.session.currentUser && req.session.currentUser.role === "admin"
-    );
-    next();
-  });
+server.use(function checkLoggedIn(req, res, next) {
+  res.locals.isLoggedIn = Boolean(req.session.currentUser);
+  res.locals.isAdmin = Boolean(
+    req.session.currentUser && req.session.currentUser.role === "admin"
+  );
+  next();
+});
 
 function MyClass() { EventEmitter.call(this) };
 util.inherits(MyClass, EventEmitter);
@@ -60,17 +57,5 @@ server.use('/contact', contact);
 
 const listeContacts = require('./routes/listeContacts');
 server.use('/listeContacts', listeContacts);
-
-function checkRecaptcha() {
-    var response = grecaptcha.getResponse();
-    if(response.length == 0) { 
-      //reCaptcha not verified
-      alert("no pass"); 
-    }
-    else { 
-      //reCaptch verified
-      alert("pass"); 
-    }
-  }
 
 server.listen(process.env.PORT);

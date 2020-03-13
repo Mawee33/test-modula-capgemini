@@ -1,0 +1,11 @@
+<div class="fondecran" id="contact">
+    <h1 id="listeMessage" class="text">Liste des messages</h1>
+    <section class="messages">
+        {{#each listeContacts}}
+        <p class="text">{{this.nom}}</p>
+        <p class="text">{{this.prenom}}</p>
+        <p class="text">{{this.mail}}</p>
+        <p class="text">{{this.message}}</p>
+        {{/each}}
+    </section>
+</div>
