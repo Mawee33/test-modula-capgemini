@@ -42,7 +42,7 @@ router.get("/signup", (req, res) => {
       return res.redirect("/auth/signin");
     }
     userModel
-      .findOne({ email: user.id})
+      .findOne({ id: user.id})
       .then(dbRes => {
         if (!dbRes) {
           console.log("mauvais id");
@@ -55,7 +55,7 @@ router.get("/signup", (req, res) => {
           // encryption says : password match success
           req.flash("success", `welcome ${dbRes.id}`);
           req.session.currentUser = dbRes; // user is now in session... until session.destroy
-          return res.render("event");
+          return res.render("contact");
         } else {
           // encryption says : password match failde
           req.flash("error", "wrong credentials");
