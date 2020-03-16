@@ -1,20 +1,20 @@
 const express = require("express");
 const router = new express.Router();
 
-router.get("/", (req, res, next) => {
-    res.render("index");
-  });
+router.get("/", (_, res) => {
+   res.render("index");
+});
 
- router.get("/", (req, res, next) => {
+router.get("/", (_, res) => {
    res.render("partials/nav");
 });
 
-router.get("/contact", (req, res, next) => {
-    res.render("contact");
- });
+router.get("/", (_, res) => {
+   res.render("partials/footer");
+});
 
- router.get("/listeContacts", (req, res, next) => {
-    res.render("listeContacts");
- });
+router.get("/contact", (_, res) => {
+   res.render("contact");
+});
 
-  module.exports = router;
+module.exports = router;

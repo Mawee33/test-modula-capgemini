@@ -1,9 +1,10 @@
 const express = require("express");
 const contactModel = require("./../model/contactModel.js");
+const axios = require('axios');
 
 const router = new express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (_, res) => {
   contactModel
     .find()
     .then(dbRes => {
@@ -13,7 +14,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
   const newContact = new contactModel(req.body);
   contactModel
     .create(newContact)
@@ -25,4 +26,14 @@ router.post('/', async (req, res, next) => {
     });
 });
 
-  module.exports = router;
+router.get("/:id", (req, res) => {
+  contactModel
+    .findByIdAndDelete(req.params.id)
+    .then(dbRes => {
+      req.flash("success", "contact successfully deleted");
+      res.redirect("/listeContacts");
+    })
+    .catch(dbErr => console.log("err", dbErr));
+});
+
+module.exports = router;

@@ -1,15 +1,17 @@
- <div class="fondecran">
- <form class="form" method="post" action="/auth/signin" class="form">
-                <h1 class="title">S'enregistrer</h1>
-                <label class="labelText" for="id">Identifiant</label>
-                <input class="input" name="id" required type="id" placeholder="admin">
-                <label class="labelText" for="password">Mot de passe</label>
-                <input class="input" name="password" required type="password" placeholder="admin">
-                <button class="btn-light" id="send">Go !</button>
-            </form>
-            <div class="form">
-            <p class="text">
-                Vous n'avez pas encore de compte ? <a class="link" href="/auth/signup">Créez un compte !</a>
-            </p>
-            </div>
-            </div>
+<div class="fondecran">
+    <div class="form">
+    <form class="form" method="post" action="/auth/signin" class="form">
+        <h1 class="text"  id="form-title">S'enregistrer</h1>
+        <label class="labelText" for="id">Identifiant</label>
+        <input class="input" name="id" required type="id" placeholder="admin">
+        <label class="labelText" for="password">Mot de passe</label>
+        <input class="input" name="password" required type="password" placeholder="admin">
+        <button class="btn-light" id="send">Go !</button>
+    </form>
+    <div class="form">
+        <p class="text" id="form-bottom">
+            Vous n'avez pas encore de compte ? <a class="link" href="/auth/signup">Créez un compte !</a>
+        </p>
+    </div>
+</div>
+</div>

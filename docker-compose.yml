@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  database:
+    image: mongo:4.2
+    expose:
+      - "27017"
+
+  web:
+    build: src
+    ports:
+      - "80:3000"
+    environment:
+      MONGO_URI: mongodb://database
+      SESSION_SECRET: this_is_not_a_secure_secret
+      PORT: 3000
+    depends_on:
+      - database
+    command: "node server.js"

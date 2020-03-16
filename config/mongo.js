@@ -6,12 +6,10 @@ mongoose
     useUnifiedTopology: true
   })
   .then(dbConnectionResult =>
-    // everything is good ^^
     console.log(
       `Connected to Mongo! Database name: "${dbConnectionResult.connections[0].name}"`
     )
   )
   .catch(err => {
-    // an error occured
     console.error("Error connecting to mongo", err);
   });

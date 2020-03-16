@@ -1,11 +1,14 @@
 <div class="fondecran" id="contact">
-<h1 id="listeMessage" class="text">Liste des messages</h1>
-<section class="messages">
-    {{#each listeContacts}}
-    <p class="text">{{this.name}}</p>
-    <p class="text">{{this.firstName}}</p>
-    <p class="text">{{this.email}}</p>
-    <p class="text">{{this.message}}</p>
-    {{/each}}
-</section>
+    <h1 id="listeMessage" class="text">Liste des messages</h1>
+    <section class="messages">
+        {{#each listeContacts}}
+        <div class="message-case">
+        <p class="text">Nom: {{this.nom}}</p>
+        <p class="text">Prénom: {{this.prenom}}</p>
+        <p class="text">Mail: {{this.mail}}</p>
+        <p class="text">Message: {{this.message}}</p>
+        <a class="btn btn-primary" id="button-delete" href="/listeContacts/{{this.id}}">Effacer</a>
+        </div>
+        {{/each}}
+    </section>
 </div>
