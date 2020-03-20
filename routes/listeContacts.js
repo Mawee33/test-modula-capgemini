@@ -1,25 +1,31 @@
 const express = require("express");
 const contactModel = require("./../model/contactModel.js");
-const axios = require('axios');
 
 const router = new express.Router();
 
-router.get("/", async (_, res) => {
-  contactModel
-    .find()
-    .then(dbRes => {
-      res.render("listeContacts", {
-        listeContacts: dbRes,
+async function getContacts() {
+  router.get("/", async (_, res) => {
+    contactModel
+      .find()
+      .then(dbRes => {
+        res.render("listeContacts", {
+          listeContacts: dbRes,
+        });
       });
-    });
-});
+  });
+}
+
+getContacts();
+
+
 
 router.post('/', async (req, res) => {
   const newContact = new contactModel(req.body);
   contactModel
     .create(newContact)
     .then(() => {
-      res.redirect('/listeContacts');
+      req.flash("success", "message successfully created");
+      return res.redirect('/contact');
     })
     .catch(dbErr => {
       res.status(500).send(dbErr);
@@ -35,5 +41,7 @@ router.get("/:id", (req, res) => {
     })
     .catch(dbErr => console.log("err", dbErr));
 });
+
+
 
 module.exports = router;

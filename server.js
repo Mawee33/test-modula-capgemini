@@ -33,7 +33,14 @@ server.use(
     resave: true
   })
 );
+
 server.use(flash());
+
+server.use(function exposeFlashMessage(req, res, next) {
+  res.locals.success_msg = req.flash("success");
+  res.locals.error_msg = req.flash("error");
+  next();
+});
 
 server.use(function checkLoggedIn(req, res, next) {
   res.locals.isLoggedIn = Boolean(req.session.currentUser);
@@ -42,6 +49,8 @@ server.use(function checkLoggedIn(req, res, next) {
   );
   next();
 });
+
+
 
 function MyClass() { EventEmitter.call(this) };
 util.inherits(MyClass, EventEmitter);

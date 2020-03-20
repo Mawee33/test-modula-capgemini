@@ -10,6 +10,10 @@ router.get("/", (_, res) => {
 });
 
 router.get("/", (_, res) => {
+   res.render("partials/flashMessage");
+});
+
+router.get("/", (_, res) => {
    res.render("partials/footer");
 });
 
